@@ -111,7 +111,7 @@
                 <v-icon >mdi-file</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="file.name"></v-list-item-title>
+                <v-list-item-title >{{file.name}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <!--End when the list item is clicked the showFile method will be called with the file index in the files array passed to it  -->
@@ -211,7 +211,7 @@
                   <v-icon >mdi-account</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title v-text="user.username"></v-list-item-title>
+                  <v-list-item-title >{{user.username}}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -276,7 +276,7 @@ export default {
     this.username = user.username;
     // this.socket = io("https://code-blackboard.herokuapp.com/");
     // this.socket = io("http://localhost:5500/");
-    this.socket = io();
+    this.socket = io("https://collabo-api.onrender.com");
       this.socket.on("connect", () => {
       this.connected = true;
       console.log(this.socket.id);
@@ -324,8 +324,10 @@ export default {
       scrollbarStyle: null,
     });
 
-    this.editor.on("change", (e) => {
+    this.editor.on("change", (e,changeObj) => {
       this.cursor = {...this.editor.getCursor()};
+      console.log(this.cursor)
+      console.log(changeObj)
       if (this.echo) {
         this.files[this.active].content = this.editor.getValue();
         // socket
